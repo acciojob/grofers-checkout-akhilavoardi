@@ -1,41 +1,25 @@
-const getSumBtn = document.createElement("button");
-getSumBtn.append("Get Total Price");
-document.body.appendChild(getSumBtn);
+// Get all price cells
+const priceElements = document.querySelectorAll(".prices");
 
-const getSum = () => {
-  // Select all elements with class 'price'
-  const priceElements = document.querySelectorAll(".price");
-  let total = 0;
+// Calculate total
+let total = 0;
+priceElements.forEach(price => {
+    total += Number(price.textContent);
+});
 
-  // Calculate the total
-  priceElements.forEach(priceEl => {
-    const value = parseFloat(priceEl.textContent);
-    if (!isNaN(value)) {
-      total += value;
-    }
-  });
+// Get the table
+const table = document.querySelector("table");
 
-  // Check if a total row already exists, and remove it
-  const existingTotalRow = document.querySelector(".total-row");
-  if (existingTotalRow) {
-    existingTotalRow.remove();
-  }
+// Create a new row
+const totalRow = document.createElement("tr");
 
-  // Create new row and cell
-  const totalRow = document.createElement("tr");
-  totalRow.classList.add("total-row");
+// Create a single cell containing the total
+const totalCell = document.createElement("td");
+totalCell.textContent = total;
 
-  const totalCell = document.createElement("td");
-  totalCell.colSpan = 2; // Since table has 2 columns
-  totalCell.style.fontWeight = "bold";
-  totalCell.textContent = `Total Price: Rs ${total}`;
+// Span across all columns (assuming 2 columns: item and price)
+totalCell.colSpan = 2;
 
-  // Append cell to row and row to table
-  totalRow.appendChild(totalCell);
-  const table = document.querySelector("table");
-  table.appendChild(totalRow);
-};
-
-getSumBtn.addEventListener("click", getSum);
-
+totalRow.appendChild(totalCell);
+table.appendChild(totalRow);
 	
