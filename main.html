@@ -27,10 +27,14 @@
 
 <script>
 function calculateTotal() {
+    const prices = document.querySelectorAll(".prices");
     let total = 0;
 
-    document.querySelectorAll(".prices").forEach(cell => {
-        total += parseInt(cell.textContent, 10) || 0;
+    prices.forEach(cell => {
+        const matches = cell.textContent.match(/\d+/g);
+        if (matches) {
+            total += Number(matches[matches.length - 1]);
+        }
     });
 
     document.getElementById("ans").textContent = total;
